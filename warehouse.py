@@ -15,15 +15,26 @@ def get_items():
 
 def add_item(items):
    name = input('What would you like add to warehause?\nItem name:')
-   quantity = input('Item quantity:')
+   quantity = int(input('Item quantity:'))
    unit = input('item unit:')
-   price = input('Item price:')
+   price = int(input('Item price:'))
    items.update({name:{'quantity':quantity,'unit':unit,'unit price':price}})
+
+def sell_item(items):
+    item = input("Item name:")
+    if item in items:
+        quantity = int(input("Quantity to sell:"))
+        price = items[item]['unit price'] * quantity
+        items[item]['quantity'] -= quantity
+        print(f'The sale is made!\nBilans: +{price}')
+    else:
+        print('no goods or incorrect name')
+
 
 if __name__ == '__main__':
     while True:
         option=input\
-            ("""Menu:\nshow\nexit\nadd\nWhat are you want to do?:""")
+            ("""Menu:\nshow\nexit\nadd\nsell\nWhat are you want to do?:""")
 
         if option == 'exit':
             break
@@ -33,5 +44,8 @@ if __name__ == '__main__':
 
         if option == 'add':
             add_item(items)
+
+        if option == 'sell':
+            sell_item(items)
 
     input("exiting... see you! (press Enter)")
