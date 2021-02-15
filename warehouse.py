@@ -4,6 +4,7 @@ items ={'coal':{'quantity':160,'unit':'t','unit price':1500},
 
 sold_items = dict()
 
+inventory_value = 0
 
 def get_items():
     name,quantity,unit,unit_price = '{:15}'.format('Name'),'{:^15}'.format('Quantity'),'{:^15}'.format('Unit'),'{:^15}'.format('Unit price')
@@ -15,6 +16,7 @@ def get_items():
         nam,qua, uni, uni_pri = '{:15}'.format(i),'{:^13}'.format(position['quantity']), '{:^14}'.format(position['unit']), '{:^15}'.format(
             position['unit price'])
         print(nam, qua, uni, uni_pri)
+    print(f'Inventory value:{inventory_value}')
 
 def add_item(items):
    name = input('What would you like add to warehause?\nItem name:')
@@ -40,13 +42,21 @@ def sell_item(items):
     else:
         print('no goods or incorrect name')
 
-
+def inv_value(inventory_value):
+    inventory_value = 0
+    for i in items:
+        qua,pri = items[i]['quantity'],items[i]['unit price']
+        inventory_value += qua*pri
+    return inventory_value
 
 
 
 
 if __name__ == '__main__':
     while True:
+
+        inventory_value = inv_value(inventory_value)
+
         option=input\
             ("""Menu:\nshow\nexit\nadd\nsell\nWhat are you want to do?:""")
 
