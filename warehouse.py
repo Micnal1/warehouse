@@ -110,4 +110,4 @@ if __name__ == '__main__':
         if option == 'save':
             convert_to_save(items,'save_inventory.txt')
 
-    input("exiting... see you! (press Enter)")
+    input("exiting... see you!! (press Enter)")
