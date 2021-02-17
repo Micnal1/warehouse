@@ -1,0 +1,4 @@
+coal 100 t 1500
+coal_eco_peas 210 t 1000
+culm 260 t 650
+

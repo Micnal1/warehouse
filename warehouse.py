@@ -1,11 +1,3 @@
-items ={'coal':{'quantity':160,'unit':'t','unit price':1500},
-        'coal eco peas':{'quantity':210,'unit':'t','unit price':1000},
-        'culm':{'quantity':260,'unit':'t','unit price':650}}
-
-sold_items = dict()
-
-inventory_value = 0
-
 def get_items():
     name,quantity,unit,unit_price = '{:15}'.format('Name'),'{:^15}'.format('Quantity'),'{:^15}'.format('Unit'),'{:^15}'.format('Unit price')
     print(f"{name}{quantity}{unit}{unit_price}")
@@ -19,7 +11,7 @@ def get_items():
     print(f'Inventory value:{inventory_value}')
 
 def add_item(items):
-   name = input('What would you like add to warehause?\nItem name:')
+   name = input('What would you like add to warehouse?\nItem name:')
    quantity = int(input('Item quantity:'))
    unit = input('item unit:')
    price = int(input('Item price:'))
@@ -42,23 +34,65 @@ def sell_item(items):
     else:
         print('no goods or incorrect name')
 
-def inv_value(inventory_value):
+def inv_value():
     inventory_value = 0
     for i in items:
         qua,pri = items[i]['quantity'],items[i]['unit price']
         inventory_value += qua*pri
     return inventory_value
 
+def add_space(a):
+    output = ''
+    if " " in a:
+        for i in a:
 
+            if i == ' ':
+                output += '_'
+            else:
+                output += i
+    else:
+        for i in a:
+
+            if i == '_':
+                output += ' '
+            else:
+                output += i
+
+    return output
+
+def convert_to_save(items,file):
+    with open(file,'w') as save:
+
+        for i in items:
+
+            a,b,c,d = add_space(i),str(items[i]['quantity']),items[i]['unit'],str(items[i]['unit price'])
+
+            wri = f'{a} {b} {c} {d}\n'
+            save.write(wri)
+    print('Save completed!')
+
+def convert_to_program(items,file):
+    with open(file, 'r') as load:
+        for line in load:
+            a,b,c,d = line.split()
+            a = add_space(a)
+            items.update({a:{'quantity':int(b),'unit':c,'unit price':int(d)}})
 
 
 if __name__ == '__main__':
+
+    items = dict()
+    sold_items = dict()
+    inventory_value = 0
+
+    convert_to_program(items,'save_inventory.txt')
+
     while True:
 
-        inventory_value = inv_value(inventory_value)
+        inventory_value = inv_value()
 
         option=input\
-            ("""Menu:\nshow\nexit\nadd\nsell\nWhat are you want to do?:""")
+            ("""Menu:\nshow\nexit\nadd\nsell\nsave\nWhat are you want to do?:""")
 
         if option == 'exit':
             break
@@ -73,5 +107,7 @@ if __name__ == '__main__':
             name,quantity,unit,price = sell_item(items)
             get_item_to_sold_items(sold_items,name,quantity,unit,price)
 
+        if option == 'save':
+            convert_to_save(items,'save_inventory.txt')
+
     input("exiting... see you! (press Enter)")
-    print(sold_items)
